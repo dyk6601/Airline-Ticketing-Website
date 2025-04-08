@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf8" />
+    </head>
+
+    <header>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1 id="header-text">B.A.D. Flights</h1>
+    </header>
+
+    <body>
+        {% if flights %}
+        <p>Flights Purchased By: {{cust_email}}</p>
+        {% endif %}
+        <table>
+            {% if not flights %}
+            <th>No Flights Taken by: {{cust_email}}</th>
+            {% else %}
+            <th>Flight Num</th>
+            <th>Number of Tickets</th>
+
+            {% for flight in flights %}
+            <tr>
+                <td>{{flight['flight_num']}}</td>
+                <td>{{flight['num_tickets']}}</td>
+            </tr>
+            {% endfor %} {% endif %}
+        </table>
+
+        <a id="return" href="/customerInfo"> Return to Customer Info </a>
+        {%endblock%}
+    </body>
+
+    <footer></footer>
+</html>

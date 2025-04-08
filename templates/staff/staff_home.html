@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+    </head>
+
+    <header>
+        {% extends "/staff/base_staff.html" %} {% block content %}
+    </header>
+    <body>
+        {% if search %}
+        <h1> Welcome {{data['first_name']}} {{data['last_name']}} </h1>
+
+        <a href="/flightManager"> Flight Manager </a> <br \>
+        <a href="/customerInfo"> Customer Info </a>
+
+        <div>
+            <form class="search_bar" action="/staffSearchFlights" method="POST">
+                <label id="search_box"> Departure </label>
+                <select name="departure_airport" required>
+                    <option value="" disabled selected> SELECT </option>
+                    {% for airport in airports %}
+                    <option> {{airport['airport_city']}} </option>
+                    {% endfor %}
+                </select>
+
+                <label id="search_box"> Arrival </label>
+                <select name="arrival_airport" required>
+                    <option value="" disabled selected> SELECT </option>
+                    {% for airport in airports %}
+                    <option> {{airport['airport_city']}} </option>
+                    {% endfor %}
+                </select>
+
+                <label id="search_box"> From </label>
+                <input type="date", name="start" required>
+
+                <label id="search_box"> To </label> <!-- add min date to previous field via JS -->
+                <input type="date", name="end">
+
+                <input type="submit" value = Search />
+            </form>
+            {% else %}
+                <a id="return" href="/staffHome"> Return to Homepage </a>
+            {% endif %}
+        </div>
+        <div class="flights">
+            <table>
+                {% if not flights %}
+                    <th> No Flights </th>
+                {% else %}
+                    <th> Flight Number </th>
+                    <th> Departure City </th>
+                    <th> Departure Date </th>
+                    <th> Departure Time </th>
+                    <th> Arrival City </th>
+                    <th> Arrival Date </th>
+                    <th> Arrival Time </th>
+                    <th> Status </th>
+                    <th> Review </th>
+                    {% for flight in flights %}
+                        <tr>
+                            <td>{{flight['flight_num']}}</td>
+                            <td>{{flight['depart_city']}}</td>
+                            <td>{{flight['depart_date']}}</td>
+                            <td>{{flight['depart_time']}}</td>
+                            <td>{{flight['arrival_city']}}</td>
+                            <td>{{flight['arrival_date']}}</td>
+                            <td>{{flight['arrival_time']}}</td>
+                            <td>{{flight['status']}}</td>
+                            <td>
+                                <form class="search_bar" action="/getCustomersFromFlight" method="POST">
+                                    <input type="hidden" name="flight_num" value={{flight['flight_num']}}>
+                                    <input type="submit" value = OPEN />
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+
+    {% endblock %}
+    </body>
+
+    <footer> </footer>
+</html>

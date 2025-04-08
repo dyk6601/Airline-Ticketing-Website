@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+    </head>
+
+    <header>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1 id="header-text"> Add Flight </h1>
+    </header>
+
+    <body>
+        {% if error %}
+		    <p class="error"><strong>Error:</strong> {{error}}</p>
+	    {% endif %}
+
+        <form class="search_bar" action="/addFlight" method="POST">
+            <label id="search_box"> Airplane ID </label>
+            <select name="airplane_id" required>
+                <option value="" disabled selected> SELECT </option>
+                {% for airplane in airplanes %}
+                    <option> {{airplane['airplane_id']}} </option>
+                {% endfor %}
+            </select>
+
+            <label id="search_box"> Flight ID </label>
+            <input type="number" name="flight_id" size="5" required>
+
+            <label id="search_box"> Base Price </label>
+            <input type="number" name="price" required> <br \>
+
+            <label id="search_box"> Departure Airport </label>
+            <select name="depart_airport" required>
+                <option value="" disabled selected> SELECT </option>
+                {% for airport in airports %}
+                    <option value={{airport['airport_code']}}> {{airport['airport_code']}}: {{airport['airport_name']}} </option>
+                {% endfor %}
+            </select>
+
+            <label id="search_box"> Departure Date </label>
+            <input type="date" name="depart_date" required>
+
+            <label id="search_box"> Departure Time </label>
+            <input type="time" name="depart_time" required> <br \>
+
+            <label id="search_box"> Arrival Airport </label>
+            <select name="arrival_airport" required>
+                <option value="" disabled selected> SELECT </option>
+                {% for airport in airports %}
+                    <option value={{airport['airport_code']}}> {{airport['airport_code']}}: {{airport['airport_name']}} </option>
+                {% endfor %}
+            </select>
+
+            <label id="search_box"> Arrival Date </label>
+            <input type="date" name="arrival_date" required>
+
+            <label id="search_box"> Arrival Time </label>
+            <input type="time" name="arrival_time" required>
+
+            <label id="search_box"> </label>
+
+            <input type="submit" value = Submit />
+        </form>
+
+        <a id="return" href="/flightManager"> Return to Flight Manager </a>
+        {%endblock%}
+    </body>
+
+    <footer> </footer>
+</html>

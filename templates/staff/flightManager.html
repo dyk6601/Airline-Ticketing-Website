@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+    </head>
+    <header>
+    </header>
+
+    <body>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1>Staff Flight Manager</h1>
+
+        <table>
+            {% if not flights %}
+                <th> No Flights </th>
+            {% else %}
+                <th> Airplane ID </th>
+                <th> Flight Number </th>
+                <th> Departure City </th>
+                <th> Departure Date </th>
+                <th> Departure Time </th>
+                <th> Arrival City </th>
+                <th> Arrival Date </th>
+                <th> Arrival Time </th>
+                <th> Status </th>
+                <th> Base Price </th>
+                {% for flight in flights %}
+                    <tr>
+                        <td>{{flight['airplane_id']}}</td>
+                        <td>{{flight['flight_num']}}</td>
+                        <td>{{flight['depart_city']}}</td>
+                        <td>{{flight['depart_date']}}</td>
+                        <td>{{flight['depart_time']}}</td>
+                        <td>{{flight['arrival_city']}}</td>
+                        <td>{{flight['arrival_date']}}</td>
+                        <td>{{flight['arrival_time']}}</td>
+                        <td>{{flight['status']}}</td>
+                        <td>{{flight['base_price']}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        <a href="/addFlightPage"> Add Flight</a>
+        <a href="/flightStatusPage"> Change Flight Status </a> <br \>
+
+
+        <table>
+            {% if not airports %}
+                <th> No Airports </th>
+            {% else %}
+                <th> Airport Code </th>
+                <th> Name </th>
+                <th> City </th>
+                {% for airport in airports %}
+                    <tr>
+                        <td> {{airport['airport_code']}} </td>
+                        <td> {{airport['airport_name']}} </td>
+                        <td> {{airport['airport_city']}} </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+        <a href="/addAirportPage"> Add Airport </a>
+
+
+        <table>
+            {% if not airplanes %}
+                <th> No Airplanes </th>
+            {% else %}
+                <th> Airplane ID </th>
+                <th> Number of Seats </th>
+                <th> Maintenance </th>
+                {% for airplane in airplanes %}
+                    <tr>
+                        <td> {{airplane['airplane_id']}} </td>
+                        <td> {{airplane['num_seats']}} </td>
+                        {% if airplane['start_date'] == None %}
+                            <td> No Maintenance Scheduled </td>
+                        {% else %}
+                            <td>{{airplane['start_date']}}: {{airplane['start_time']}} to {{airplane['end_date']}}: {{airplane['end_time']}}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+        <a href="/addAirplanePage"> Add Airplane </a> <br \>
+        <a href="/scheduleMaintenancePage"> Schedule Maintenance </p>
+
+
+        <a id="return" href="/staffHome"> Return to Homepage </a>
+        {% endblock %}
+
+        <footer> </footer>
+    </body>
+</html>

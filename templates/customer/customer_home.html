@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+    </head>
+    <header></header>
+
+    <body>
+{% extends "/customer/base_customer.html" %} {% block content %}
+<h1 id="header-text"> B.A.D. Flights </h1>
+        <p> Welcome {{data['first_name']}} {{data['last_name']}} </p>
+
+        <a href="/getFlights"> View / Purchase Flights </a> <br \>
+        <a href="/getSpending"> Spending </a>
+
+        <p> Upcoming Flights </p>
+        <table>
+            {% if not future_flights %}
+                <th> No Flights </th>
+            {% else %}
+                <th> Ticket ID </th>
+                <th> Flight Number </th>
+                <th> Departure City </th>
+                <th> Departure Date </th>
+                <th> Departure Time </th>
+                <th> Arrival City </th>
+                <th> Arrival Date </th>
+                <th> Arrival Time </th>
+                <th> Status </th>
+                <th> </th>
+                {% for flight in future_flights %}
+                    <tr>
+                        <td>{{flight['ticket_id']}}</td>
+                        <td>{{flight['flight_num']}}</td>
+                        <td>{{flight['depart_city']}}</td>
+                        <td>{{flight['depart_date']}}</td>
+                        <td>{{flight['depart_time']}}</td>
+                        <td>{{flight['arrival_city']}}</td>
+                        <td>{{flight['arrival_date']}}</td>
+                        <td>{{flight['arrival_time']}}</td>
+                        <td>{{flight['status']}}</td>
+                        <td>
+                        {% if flight['depart_date'] > next_day %}
+                        <form class="search_bar" action="/cancelFlight" method="POST">
+                            <input type="hidden" name="ticket_id" value={{flight['ticket_id']}}>
+                            <input type="submit" value = CANCEL />
+                        </form>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+        <p> Past Flights </p>
+        <table>
+            {% if not past_flights %}
+                <th> No Flights </th>
+            {% else %}
+                <th> Ticket ID </th>
+                <th> Flight Number </th>
+                <th> Departure City </th>
+                <th> Departure Date </th>
+                <th> Departure Time </th>
+                <th> Arrival City </th>
+                <th> Arrival Date </th>
+                <th> Arrival Time </th>
+                <th> </th>
+                {% for flight in past_flights %}
+                    <tr>
+                        <td>{{flight['ticket_id']}}</td>
+                        <td>{{flight['flight_num']}}</td>
+                        <td>{{flight['depart_city']}}</td>
+                        <td>{{flight['depart_date']}}</td>
+                        <td>{{flight['depart_time']}}</td>
+                        <td>{{flight['arrival_city']}}</td>
+                        <td>{{flight['arrival_date']}}</td>
+                        <td>{{flight['arrival_time']}}</td>
+                        <td>
+                            <form class="search_bar" action="/getReviewPage" method="POST">
+                                <input type="hidden" name="ticket_id" value={{flight['ticket_id']}}>
+                                <input type="submit" value = REVIEW />
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+{%endblock%}
+    </body>
+
+    <footer> </footer>
+</html>

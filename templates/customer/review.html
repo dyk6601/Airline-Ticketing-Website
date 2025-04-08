@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf8" />
+    </head>
+
+    <header>
+        {% extends "/customer/base_customer.html" %} {% block content %}
+        <h1 id="header-text">B.A.D. Flights</h1>
+    </header>
+
+    <body>
+        Review for Ticket ID: {{ticket_id}}
+
+        <form class="search_bar" action="/reviewFlight" method="POST">
+            {% if review %}
+            <label> Rating: </label>
+            <input
+                type="number"
+                name="rating"
+                min="0"
+                max="5"
+                value="{{review['rating']}}"
+            />
+            <br \ />
+
+            <label> Comments: </label> <br \ />
+            <textarea id="comments" name="comments">
+{{review['comments']}}</textarea
+            >
+            <br \ />
+            {% else %}
+            <label> Rating: </label>
+            <input type="number" name="rating" min="0" max="5" /> <br \ />
+
+            <label> Comments: </label> <br \ />
+            <textarea id="comments" name="comments"> </textarea> <br \ />
+            {% endif %}
+
+            <input type="hidden" name="ticket_id" value="{{ticket_id}}" />
+            <input type="submit" value="SUBMIT" />
+        </form>
+        <a id="return" href="/custHome"> Return to Homepage </a>
+        {%endblock%}
+    </body>
+
+    <footer></footer>
+</html>

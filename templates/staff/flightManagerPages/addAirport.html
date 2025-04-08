@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf8" />
+    </head>
+    <header>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1 id="header-text">Add Airport</h1>
+    </header>
+
+    <body>
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{error}}</p>
+        {% endif %}
+
+        <form class="search_bar" action="/addAirport" method="POST">
+            <label id="search_box"> Airport Code </label>
+            <input type="number" name="code" required /> <br \ />
+
+            <label id="search_box"> Name </label>
+            <input type="text" name="name" required /> <br \ />
+
+            <label id="search_box"> City </label>
+            <input type="text" name="city" required /> <br \ />
+
+            <label id="search_box"> Country </label>
+            <input type="text" name="country" required /> <br \ />
+
+            <label id="search_box"> Number of Terminals </label>
+            <input type="number" name="num_terminals" required /> <br \ />
+
+            <label id="search_box"> Airport Type </label>
+            <select name="airport_type" required>
+                <option value="" disabled selected>SELECT</option>
+                <option value="domestic">Domestic</option>
+                <option value="international">International</option>
+                <option value="both">Both</option>
+            </select>
+
+            <input type="submit" value="Submit" />
+        </form>
+
+        <a id="return" href="/flightManager"> Return to Flight Manager </a>
+        {%endblock%}
+    </body>
+
+    <footer></footer>
+</html>

@@ -1,0 +1,48 @@
+<html>
+<head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/reg.css') }}">
+</head>
+<body>
+{% extends "base.html" %} {% block content %}
+<form action="/staffRegistration" method="POST">
+    <p> Personal Info </p>
+    <label> Airline </label>
+    <select name="airline_name" required>
+        <option value="" disabled selected> SELECT </option>
+        {% for airline in airlines %}
+        <option> {{airline['airline_name']}} </option>
+        {% endfor %}
+    </select> </br>
+
+    <label> Email </label>
+    <input type="text" name = "email" maxlength=20 required/> </br>
+
+    <label> Username </label>
+    <input type="text" name = "username" maxlength=20 required/> </br>
+
+    <label> Password </label>
+    <input type="password" name = "password" maxlength=20 required/> </br>
+
+    <label> First Name </label>
+    <input type="text" name = "first_name" maxlength=20 required/> </br>
+
+    <label> Last Name </label>
+    <input type="text" name = "last_name" maxlength=20 required/> </br>
+
+    <label> Phone Number </label>
+    <input type="tel" name="phone_number" pattern="[0-9]{10}" required/> </br>
+
+    <label> Date of Birth </label>
+    <input type="date" name = "dob" required/> </br>
+
+    <input type="submit" value="Register">
+</form>
+
+{% if error %}
+<p class="error"><strong>Error:</strong> {{error}}</p>
+{% endif %}
+{%endblock%}
+</body>
+
+<footer> </footer>
+</html>

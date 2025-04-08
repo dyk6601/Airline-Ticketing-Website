@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
+    </head>
+
+    <header>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1 id="header-text"> Change Flight Status </h1>
+    </header>
+
+    <body>
+        <!-- add check for flight id not for that airline -->
+        <form class="search_bar" action="/changeStatus" method="POST">
+            <label id="search_box"> Flight ID </label>
+            <select name="flight_id" required>
+                <option value="" disabled selected> SELECT </option>
+                {% for flight in flights %} <!-- check to see if flight num is actually submitted -->
+                    <option value={{flight['flight_num']}}> {{flight['flight_num']}}: {{flight['depart_city']}} to {{flight['arrival_city']}} on {{flight['depart_date']}} </option>
+                {% endfor %}
+            </select>
+
+            <label id="search_box"> Status </label>
+            <select name="status" required>
+                <option value="" disabled selected> SELECT </option>
+                <option> ontime </option>
+                <option> delayed </option>
+            </select>
+
+            <input type="submit" value = Submit />
+        </form>
+
+        <a id="return" href="/flightManager"> Return to Flight Manager </a>
+        {%endblock%}
+    </body>
+
+    <footer> </footer>
+</html>

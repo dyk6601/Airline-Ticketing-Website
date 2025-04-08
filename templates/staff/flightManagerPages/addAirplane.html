@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf8" />
+    </head>
+
+    <header>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1 id="header-text">Add Airplane</h1>
+    </header>
+
+    <body>
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{error}}</p>
+        {% endif %}
+
+        <form class="search_bar" action="/addAirplane" method="POST">
+            <label id="search_box"> Airplane ID </label>
+            <input type="number" name="id" required /> <br \ />
+
+            <label id="search_box"> Number of Seats </label>
+            <input type="number" name="num_seats" required /> <br \ />
+
+            <label id="search_box"> Manufacturer </label>
+            <input type="text" name="manufacturer" required /> <br \ />
+
+            <label id="search_box"> Model Number </label>
+            <input type="number" name="model_num" required /> <br \ />
+
+            <label id="search_box"> Manufacture Date </label>
+            <input type="date" name="manufact_date" required />
+
+            <input type="submit" value="Submit" />
+        </form>
+
+        <a id="return" href="/flightManager"> Return to Flight Manager </a>
+        {%endblock%}
+    </body>
+
+    <footer></footer>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+    </head>
+    <header>
+    </header>
+    <body>
+        {% extends "/customer/base_customer.html" %} {% block content %}
+         <h1 id="header-text"> B.A.D. Flights </h1>
+        {% if twoTickets == True %}
+            <p> Purchasing Ticket {{ticketOne}}: Flight Number {{flight_info['first_flight']}} on {{flight_info['first_flight_airline']}} for ${{flight_info['first_cost']}}</p>
+            <p> and </p>
+            <p> Purchasing Ticket {{ticketTwo}}: Flight Number {{flight_info['flight_num']}} on {{flight_info['airline']}} for ${{flight_info['cost']}}</p>
+        {% else %}
+            <p> Purchasing Ticket {{ticketOne}}: Flight Number {{flight_info['flight_num']}} on {{flight_info['airline']}} for ${{flight_info['cost']}}</p>
+        {% endif %}
+
+        <form class="search_bar" action="/purchaseTickets" method="POST">
+            <label> First Name </label>
+            <input type="text" name="first_name" maxlength=20 required> <br \>
+
+            <label> Last Name </label>
+            <input type="text" name="last_name"  maxlength=20 required> <br \>
+
+            <label> Date of Birth </label>
+            <input type="date" name="date_of_birth" required> <br \><br \>
+
+
+            <label> Card Number </label>
+            <input type="number" name="card_number" required> <br \>
+
+            <label> Card Name </label>
+            <input type="text" name="card_name" maxlength=20 required> <br \>
+
+            <label> Expiration </label>
+            <input type="date" name="expiration" required> <br \>
+
+            <label> Credit/Debit </label>
+            <input type="radio" id="credit" name="card_type" value="credit" required>
+            <label for="credit"> Credit </label>
+            <input type="radio" id="debit" name="card_type" value="debit" required>
+            <label for="credit"> Debit </label> <br \><br \>
+
+            <input type="hidden" name="first_flight" value={{flight_info['first_flight']}}>
+            <input type="hidden" name="first_flight_airline" value="{{flight_info['first_flight_airline']}}">
+            <input type="hidden" name="first_cost" value={{flight_info['first_cost']}}>
+
+            <input type="hidden" name="flight_num" value={{flight_info['flight_num']}}>
+            <input type="hidden" name="airline" value="{{flight_info['airline']}}">
+            <input type="hidden" name="cost" value={{flight_info['cost']}}>
+
+            <input type="hidden" name="ticketOne" value={{ticketOne}}>
+            <input type="hidden" name="ticketTwo" value={{ticketTwo}}>
+
+            <input type="submit" value = Purchase />
+        </form>
+        <a id="return" href="/getFlights"> Return to Flights </a>
+        {%endblock%}
+    </body>
+
+    <footer> </footer>
+</html>

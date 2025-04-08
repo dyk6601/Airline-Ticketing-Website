@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+    </head>
+
+    <body>
+        <header>
+        {% extends "/customer/base_customer.html" %} {% block content %}
+        <h1 id="header-text"> B.A.D. Flights </h1>
+    </header>
+        {% if search %}
+        <div>
+            <form class="search_bar" action="/searchFlightsCust" method="POST">
+                <label id="search_box"> Departure </label>
+                <select name="departure_airport" required>
+                    <option value="" disabled selected> SELECT </option>
+                    {% for airport in airports %}
+                    <option> {{airport['airport_city']}} </option>
+                    {% endfor %}
+                </select>
+
+                <label id="search_box"> Arrival </label>
+                <select name="arrival_airport" required>
+                    <option value="" disabled selected> SELECT </option>
+                    {% for airport in airports %}
+                    <option> {{airport['airport_city']}} </option>
+                    {% endfor %}
+                </select>
+
+                <label id="search_box"> Departure Date </label>
+                <input type="date", name="departure_date" min={{today}} required>
+
+                <label id="search_box"> Return Date </label> <!-- add min date to previous field via JS -->
+                <input type="date", name="return_date" min={{today}}>
+
+                <input type="submit" value = Search />
+            </form>
+        </div>
+        {% else %}
+            <a id="return" href="/getFlights"> Return to Search </a>
+        {% endif %}
+        <div class="flights">
+            <table>
+                {% if not flights %}
+                    <th> No Flights </th>
+                {% else %}
+                <th> Airline Name </th>
+                <th> Flight Number </th>
+                <th> Departure City </th>
+                <th> Departure Date </th>
+                <th> Departure Time </th>
+                <th> Arrival City </th>
+                <th> Arrival Date </th>
+                <th> Arrival Time </th>
+                <th> Price </th>
+                <th> </th>
+            {% for flight in flights %}
+                <tr>
+                    <td>{{flight['airline_name']}}</td>
+                    <td>{{flight['flight_num']}}</td>
+                    <td>{{flight['depart_city']}}</td>
+                    <td>{{flight['depart_date']}}</td>
+                    <td>{{flight['depart_time']}}</td>
+                    <td>{{flight['arrival_city']}}</td>
+                    <td>{{flight['arrival_date']}}</td>
+                    <td>{{flight['arrival_time']}}</td>
+                    <td>{{flight['price']}}</td>
+                    <td>
+                        {% if not return_date %}
+                        <form class="search_bar" action="/purchaseOneWay" method="POST">
+                            {% if first_flight %}
+                                <input type="hidden" name="first_flight" value={{first_flight}}>
+                                <input type="hidden" name="first_flight_airline" value="{{first_flight_airline}}">
+                                <input type="hidden" name="first_cost" value="{{first_cost}}">
+                            {% else %}
+                            <input type="hidden" name="first_flight" value="-1">
+                            <input type="hidden" name="first_flight_airline" value="None">
+                            <input type="hidden" name="first_cost" value="0">
+                            {% endif %}
+
+                            <input type="hidden" name="flight_num" value={{flight['flight_num']}}>
+                            <input type="hidden" name="airline" value="{{flight['airline_name']}}">
+                            <input type="hidden" name="cost" value="{{flight['price']}}">
+                            <input type="submit" value = PURCHASE />
+                        </form>
+                        {% else %}
+                        <form class="search_bar" action="/purchaseTwoWay" method="POST">
+                            <input type="hidden" name="first_flight" value={{flight['flight_num']}}>
+                            <input type="hidden" name="first_flight_airline" value="{{flight['airline_name']}}">
+                            <input type="hidden" name="first_cost" value="{{flight['price']}}">
+
+                            <input type="hidden" name="departure_date" value={{return_date}}>
+                            <input type="hidden" name="departure_airport" value={{arrive_to}}>
+                            <input type="hidden" name="arrival_airport" value="{{depart_from}}">
+                            <input type="submit" value = PURCHASE />
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </table>
+
+        <a id="return" href="/custHome"> Return to Homepage </a>
+        {%endblock%}
+    </body>
+
+    <footer> </footer>
+</html>

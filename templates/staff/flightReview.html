@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf8" />
+        <link />
+    </head>
+
+    <header></header>
+
+    <body>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1 id="header-text">B.A.D. Flights</h1>
+        <h2>Customers on Flight {{flight}}</h2>
+        {% if not data %}
+        <table>
+            <th>No Customers</th>
+        </table>
+        {% else %} {% if avgRating['avg'] %}
+        <p>Average Rating: {{avgRating['avg']}}</p>
+        {% else %}
+        <p>No Ratings</p>
+        {% endif %}
+
+        <table>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Review</th>
+            {% for customer in data %}
+            <tr>
+                <td>
+                    {{customer['cust_first_name']}}
+                    {{customer['cust_last_name']}}
+                </td>
+                {% if not customer['rating'] %}
+                <td>- / 5</td>
+                <td>Review not given</td>
+                {% else %}
+                <td>{{customer['rating']}} / 5</td>
+                <td>{{customer['comments']}}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        <a id="return" href="/staffHome"> Return to Homepage </a>
+        {%endblock%}
+    </body>
+
+    <footer></footer>
+</html>

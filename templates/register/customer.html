@@ -1,0 +1,64 @@
+<html>
+<head>
+</head>
+<body>
+{% extends "base.html" %} {% block content %}
+<form action="/customerRegistration" method="POST">
+    <p> Personal Info </p>
+    <label> Email </label>
+    <input type="text" name = "email" maxlength=20 required/> </br>
+
+    <label> Password </label>
+    <input type="password" name = "password" maxlength=20 required/> </br>
+
+    <label> First Name </label>
+    <input type="text" name = "first_name" maxlength=20 required/> </br>
+
+    <label> Last Name </label>
+    <input type="text" name = "last_name" maxlength=20 required/> </br>
+
+    <label> Phone Number </label>
+    <input type="tel" name="phone_number" pattern="[0-9]{10}" required/> </br>
+
+    <label> Date of Birth </label>
+    <input type="date" name = "dob" required/> </br>
+
+    <p> Address </p>
+    <label> Building Number </label>
+    <input type="number" name = "building_num" min=0 max=99999 required/> </br>
+
+    <label> Street Name </label>
+    <input type="text" name = "street" maxlength=20 required/> </br>
+
+    <label> Apartment Number </label>
+    <input type="number" name = "apartment_num" min=0 max=99999 required/> </br>
+
+    <label> City </label>
+    <input type="text" name = "city" maxlength=20 required/> </br>
+
+    <label> State (ex. NY) </label>
+    <input type="text" name = "state" maxlength=2 required/> </br>
+
+    <label> Zip Code </label>
+    <input type="number" name = "zip_code" min=0 max=99999 required/> </br>
+
+    <p> Travel Info </p>
+    <label> Passport Number </label>
+    <input type="number" name = "passport_num" min=0 max=9999999999 required/> </br>
+
+    <label> Passport Expiration </label>
+    <input type="date" name = "passport_exp" required/> </br>
+
+    <label> Passport Country </label>
+    <input type="text" name = "passport_country" maxlength=20 required/> </br>
+
+    <input type="submit" value="Register">
+</form>
+
+{% if error %}
+<p class="error"><strong>Error:</strong> {{error}}</p>
+{% endif %}
+{%endblock%}
+</body>
+<footer> </footer>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+    </head>
+
+    <header>
+        {% extends "/staff/base_staff.html" %}{% block content %}
+        <h1 id="header-text"> Customer Info </h1>
+    </header>
+
+    <body>
+        <p> Last Month Revenue: {{month_profit['month']}}</p>
+        <p> Last Year Revenue: {{year_profit['year']}}</p>
+
+        <table>
+            {% if not customers %}
+                <th> No Customers </th>
+            {% else %}
+                <th> Name </th>
+                <th> Flights </th>
+                {% for customer in customers %}
+                    <tr>
+                        <td>{{customer['first_name']}} {{customer['last_name']}}</td>
+                        <td>
+                            <form class="search_bar" action="/getFlightsFromCustomer" method="POST">
+                                <input type="hidden" name="cust_email" value={{customer['email']}}>
+                                <input type="submit" value = OPEN />
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+        <a id="return" href="/staffHome"> Return to Homepage </a>
+        {%endblock%}
+    </body>
+
+    <footer> </footer>
+</html>
